@@ -1,18 +1,28 @@
-# Use official OpenJDK 17 image
-FROM openjdk:17-jdk-alpine
-
-# Set working directory inside container
+# -------- BUILD STAGE --------
+FROM eclipse-temurin:17-jdk-alpine AS builder
 WORKDIR /app
 
-# Copy all project files
-COPY . .
+# Copy only required files first (for caching)
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
 
-# Build the Spring Boot project
+RUN chmod +x mvnw
+RUN ./mvnw dependency:go-offline
+
+# Copy source code
+COPY src src
+
+# Build jar
 RUN ./mvnw clean package -DskipTests
 
-# Expose port (Render assigns dynamic PORT)
-ENV PORT 8080
-EXPOSE $PORT
+# -------- RUN STAGE --------
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
 
-# Run the Spring Boot application
-CMD ["sh", "-c", "java -jar target/*.jar --server.port=$PORT"]
+COPY --from=builder /app/target/*.jar app.jar
+
+ENV PORT=8080
+EXPOSE 8080
+
+CMD ["sh", "-c", "java -jar app.jar --server.port=$PORT"]
