@@ -48,7 +48,15 @@
              todoService.deleteTodoById(id);
          }
 
-         @DeleteMapping("/deleteall")
+        @PutMapping("/{id}/status")
+        public ResponseEntity<Todo> updateStatus(@PathVariable Long id, @RequestBody Todo body){
+            Todo todo = todoService.getTodoById(id);
+            todo.setIsdone(body.isIsdone());
+            return new ResponseEntity<>(todoService.updateTodo(todo), HttpStatus.OK);
+        }
+
+
+        @DeleteMapping("/deleteall")
         void  deleteAllTodo(){
             todoService.deleteAllTodo();
         }
