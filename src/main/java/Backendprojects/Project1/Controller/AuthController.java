@@ -23,15 +23,15 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final Jwtutils jwtutils;
 
-//    public AuthController(UserRepository userRepository,
-//                          UserService userService,
-//                          PasswordEncoder passwordEncoder,
-//                          Jwtutils jwtutils) {
-//        this.userRepository = userRepository;
-//        this.userService = userService;
-//        this.passwordEncoder = passwordEncoder;
-//        this.jwtutils = jwtutils;
-//    }
+    public AuthController(UserRepository userRepository,
+                          UserService userService,
+                          PasswordEncoder passwordEncoder,
+                          Jwtutils jwtutils) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtutils = jwtutils;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> UserRegister(@RequestBody Map<String,String> body){
