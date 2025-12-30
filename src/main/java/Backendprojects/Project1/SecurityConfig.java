@@ -39,7 +39,7 @@ public class SecurityConfig {
 
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration Configuration = new CorsConfiguration();
-        Configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        Configuration.setAllowedOrigins(List.of("http://localhost:5173","https://nextmove-theta.vercel.app/"));
         Configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         Configuration.setAllowedHeaders(List.of("*"));
         Configuration.setAllowCredentials(true);
