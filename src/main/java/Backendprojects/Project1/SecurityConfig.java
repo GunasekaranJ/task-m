@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()) )
                 .authorizeHttpRequests((authorizationManagerRequestMatcherRegistry) ->  authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/todo/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

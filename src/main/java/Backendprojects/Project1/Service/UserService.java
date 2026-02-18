@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     @Autowired
-    private UserRepository UserRepository;
+    private UserRepository userRepository;
 
     public User createUser(User user) {
-        return UserRepository.save(user);
+        return userRepository.save(user);
     }
 
     public User getUserById(Long id) {
-        return UserRepository.findById(id).orElseThrow(()->new RuntimeException("User not found"));
+        return userRepository.findById(id).orElseThrow(()->new RuntimeException("User not found"));
     }
 
 }

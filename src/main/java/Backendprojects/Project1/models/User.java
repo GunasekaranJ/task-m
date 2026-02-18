@@ -1,15 +1,15 @@
 package Backendprojects.Project1.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "Usertable")
@@ -20,7 +20,8 @@ import lombok.AllArgsConstructor;
 public class User {
     @Id
     @GeneratedValue
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Email
     @NotNull
@@ -28,4 +29,9 @@ public class User {
 
     @NotNull
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Todo> todos;
+
 }
